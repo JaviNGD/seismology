@@ -1,24 +1,80 @@
-# README
+# Seismology
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Aplicación que por medio de una task obtiene la data sismológica desde el sitio USGS, de los últimos 30 días <a href="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson">(API)</a> y persiste la información en una base de datos de acuerdo a ciertos parámetros.
 
-Things you may want to cover:
+## Correr el proyecto localmente
 
-* Ruby version
+### Clonar el proyecto
+```plaintext
+https://github.com/JaviNGD/seismology.git
+```
 
-* System dependencies
+### Ir al directorio del proyecto
+```plaintext
+cd seismology
+```
 
-* Configuration
+### Instalar gemas
+```plaintext
+bundle install
+```
 
-* Database creation
+### Crear en el directorio raíz un archivo .env para la conexión con la base de datos
+```plaintext
+DB_USERNAME=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
+```
 
-* Database initialization
+### Crear la base de datos
+```plaintext
+rails db:create
+```
 
-* How to run the test suite
+### Migrar la base de datos
+```plaintext
+rails db:migrate
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+### Iniciar el servidor 
+```plaintext
+rails server
+```
 
-* Deployment instructions
+### Se puede ingresar al servidor local desde:
+```plaintext
+http://127.0.0.1:3000/ ó http://localhost:3000/
+```
+*La dirección cambia respecto al valor ingresado en DB_HOST, del archivo .env*
 
-* ...
+## Para correr la tarea ejecutar el siguiente comando
+```plaintext
+rails import_earthquake_data:earthquake_data
+```
+
+## Endpoint 1
+
+```plaintext
+curl -X GET
+'http://127.0.0.1:3000/api/features'
+-H 'Content-Type: application/vnd.api+json' 
+-H 'cache-control: no-cache'
+```
+
+### Filtrar por mag_type
+```plaintext
+curl -X GET \
+'http://localhost:3000/api/features?filters[mag_type]=valor' \
+-H 'Content-Type: application/vnd.api+json' \
+-H 'cache-control: no-cache'
+```
+
+### Paginación
+```plaintext
+'http://127.0.0.1:3000/api/features?page=valor'
+-H 'Content-Type: application/vnd.api+json' 
+-H 'cache-control: no-cache'
+```
+
+🌍
