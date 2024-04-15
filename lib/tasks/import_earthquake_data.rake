@@ -1,3 +1,8 @@
+# This rake task imports earthquake data from the USGS API for the past 30 days.
+# The data is parsed and validated before creating a new Datum instance in the database.
+# The task is executed by running the following command:
+# $ rake import_earthquake_data:earthquake_data
+
 require 'httparty'
 
 namespace :import_earthquake_data do
@@ -29,6 +34,7 @@ namespace :import_earthquake_data do
                 next if geometry['coordinates'][0] < -180.0 || geometry['coordinates'][0] > 180.0
         
                 # Create a new Datum instance with the parsed data from the API only if the data passes validation
+                # The new Datum instance is saved to the database if it does not already exist (table Data)
                 Datum.create(
                     external_id: feature['id'],
                     magnitude: properties['mag'],

@@ -74,3 +74,7 @@ gem "httparty"
 
 # Dotenv is a Ruby gem for loading environment variables from a .env file into ENV
 gem "dotenv"
+
+# Kaminary is a Ruby gem for pagination
+gem 'kaminari'
+
