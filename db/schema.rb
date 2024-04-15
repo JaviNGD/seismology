@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_15_161236) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_15_195127) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.text "body", null: false
+    t.bigint "data_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["data_id"], name: "index_comments_on_data_id"
+  end
 
   create_table "data", force: :cascade do |t|
     t.string "external_id"
@@ -33,4 +41,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_15_161236) do
     t.check_constraint "magnitude >= '-1.0'::numeric AND magnitude <= 10.0", name: "magnitude_range_check"
   end
 
+  add_foreign_key "comments", "data", column: "data_id"
 end

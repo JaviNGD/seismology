@@ -1,14 +1,61 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-        <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-        <%= csrf_meta_tags %>
-    </head>
-    <body>
-        <h1 class="text-3xl font-bold">
-            Seismology
-        </h1>
-    </body>
-</html>
+<h1 class="text-3xl font-bold mb-6">Seismology API Viewer 🌍</h1>
+
+<div class="flex  mb-6">
+    <form action="<%= api_features_path %>" method="get" id="pageForm">
+        <label for="page" class="font-bold">Ir a página:</label>
+        <select name="page" id="page">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+    </form>
+
+    <%= link_to "Ver features >>", api_features_path(page: 1), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 mx-4 rounded", id: "viewAllLink" %>
+
+    <script>
+    // Function to change the view all link when the page select changes
+        document.getElementById('page').addEventListener('change', function() {
+            var selectedPage = this.value;
+            var viewAllLink = document.getElementById('viewAllLink');
+            viewAllLink.href = "<%= api_features_path(page: '') %>" + selectedPage;
+        });
+    </script>
+
+</div>
+
+<div class="flex">
+    <form action="<%= api_features_path %>" method="get" id="magTypeForm">
+        <label for="mag_type" class="font-bold">Filtrar por mag_type:</label>
+        <select name="filters[mag_type]" id="mag_type">
+            <option value="">Todos</option>
+            <option value="md">md</option>
+            <option value="ml">ml</option>
+            <option value="ms">ms</option>
+            <option value="mw">mw</option>
+            <option value="me">me</option>
+            <option value="mi">mi</option>
+            <option value="mb">mb</option>
+            <option value="mlg">mlg</option>
+        </select>
+    </form>
+
+    <%= link_to "Filtrar >>", api_features_path(filters: { mag_type: '' }), class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 mx-4 rounded", id: "viewFilteredLink" %>
+
+    <script>
+        // Function to change the view filtered link when the mag_type select changes
+        document.getElementById('mag_type').addEventListener('change', function() {
+            var selectedMagType = this.value;
+            var viewFilteredLink = document.getElementById('viewFilteredLink');
+            viewFilteredLink.href = "<%= api_features_path(filters: { mag_type: '' }) %>" + selectedMagType;
+        });
+    </script>
+</div>
+
+

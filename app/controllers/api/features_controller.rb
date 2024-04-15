@@ -1,3 +1,5 @@
+# Description: This controller is responsible for handling the API requests for the features endpoint.
+
 class Api::FeaturesController < ApplicationController
     
     def index
@@ -5,7 +7,7 @@ class Api::FeaturesController < ApplicationController
         features = Datum.all
     
         # Filter by mag_type if present
-        if params[:filters] && params[:filters][:mag_type].present?
+        if params[:filters].present? && params[:filters][:mag_type].present?
             features = features.where(mag_type: params[:filters][:mag_type])
         end
 
