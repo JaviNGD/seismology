@@ -4,6 +4,11 @@ class Api::FeaturesController < ApplicationController
         # Fetch all the data from the database
         features = Datum.all
     
+        # Filter by mag_type if present
+        if params[:filters] && params[:filters][:mag_type].present?
+            features = features.where(mag_type: params[:filters][:mag_type])
+        end
+
         # Paginate the data with a default of 1000 records per page
         per_page = params[:per_page].to_i
         per_page = 1000 if per_page <= 0 || per_page > 1000
